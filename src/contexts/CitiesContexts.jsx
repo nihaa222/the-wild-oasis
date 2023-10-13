@@ -61,75 +61,112 @@ function CitiesProvider({ children }) {
   // const [cities, setCities] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
   // const [currentCity, setCurrentCity] = useState({});
-  useEffect(
-    function () {
-      async function fetchCities() {
-        dispatch({ type: "loading" });
-        try {
-          const res = await fetch(`${BASE_URL}/cities`);
-          const data = await res.json();
-          dispatch({ type: `cities/loaded`, payload: data });
-        } catch {
-          dispatch({
-            type: "rejected",
-            payload: "There was anj error loading cities...",
-          });
-        }
+  // useEffect(function () {
+  //   async function fetchCities() {
+  //     async function fetchCities() {
+  //       if (isFetching.current) {
+  //         return; // If a request is in progress, don't start another one.
+  //       }
+
+  //       isFetching.current = true;
+
+  //       dispatch({ type: "loading" });
+  //       try {
+  //         const res = await fetch(`${BASE_URL}/cities`);
+  //         const data = await res.json();
+  //         dispatch({ type: `cities/loaded`, payload: data });
+  //       } catch {
+  //         dispatch({
+  //           type: "rejected",
+  //           payload: "There was anj error loading cities...",
+  //         });
+  //       } finally {
+  //         isFetching.current = false; // Reset the flag when the request is completed.
+  //       }
+  //     }
+
+  //   fetchCities();
+  // }, []);
+
+  const isFetching = useRef(false); // Using a ref to track if a request is in progress.
+
+  useEffect(function () {
+    async function fetchCities() {
+      if (isFetching.current) {
+        return; // If a request is in progress, don't start another one.
       }
-      fetchCities();
-    },
-    [dispatch]
-  );
 
-  async function getCity(id) {
-    if (Number(id) === currentCity.id) return;
-    dispatch({ type: "loading" });
-    try {
-      const res = await fetch(`${BASE_URL}/cities/${id}`);
-      const data = await res.json();
-      dispatch({ type: "city/loaded", payload: data });
-    } catch {
-      dispatch({
-        type: "rejected",
-        payload: "There was anj error loading city...",
-      });
+      isFetching.current = true;
+      dispatch({ type: "loading" });
+
+      try {
+        const res = await fetch(`${BASE_URL}/cities`);
+        const data = await res.json();
+        dispatch({ type: "cities/loaded", payload: data });
+      } catch (error) {
+        dispatch({
+          type: "rejected",
+          payload: "There was an error loading cities...",
+        });
+      } finally {
+        isFetching.current = false; // Reset the flag when the request is completed.
+      }
     }
+
+    fetchCities();
+  }, []);
+
+  // ...
+}
+
+async function getCity(id) {
+  if (Number(id) === currentCity.id) return;
+  dispatch({ type: "loading" });
+  try {
+    const res = await fetch(`${BASE_URL}/cities/${id}`);
+    const data = await res.json();
+    dispatch({ type: "city/loaded", payload: data });
+  } catch {
+    dispatch({
+      type: "rejected",
+      payload: "There was anj error loading city...",
+    });
   }
+}
 
-  async function createCity(newCity) {
-    dispatch({ type: "loading" });
-    try {
-      const res = await fetch(`${BASE_URL}/cities`, {
-        method: "POST",
-        body: JSON.stringify(newCity),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      dispatch({ type: "city/created", payload: data });
-    } catch {
-      dispatch({
-        type: "rejected",
-        payload: "There was anj error creating city...",
-      });
-    }
+async function createCity(newCity) {
+  dispatch({ type: "loading" });
+  try {
+    const res = await fetch(`${BASE_URL}/cities`, {
+      method: "POST",
+      body: JSON.stringify(newCity),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    dispatch({ type: "city/created", payload: data });
+  } catch {
+    dispatch({
+      type: "rejected",
+      payload: "There was anj error creating city...",
+    });
   }
+}
 
-  async function deleteCity(id) {
-    dispatch({ type: "loading" });
-    try {
-      await fetch(`${BASE_URL}/cities/${id}`, {
-        method: "DELETE",
-      });
+async function deleteCity(id) {
+  dispatch({ type: "loading" });
+  try {
+    await fetch(`${BASE_URL}/cities/${id}`, {
+      method: "DELETE",
+    });
 
-      dispatch({ type: "city/deleted", payload: id });
-    } catch {
-      dispatch({
-        type: "rejected",
-        payload: "There was anj error creating city...",
-      });
-    }
+    dispatch({ type: "city/deleted", payload: id });
+  } catch {
+    dispatch({
+      type: "rejected",
+      payload: "There was anj error creating city...",
+    });
   }
 
   return (
@@ -147,13 +184,13 @@ function CitiesProvider({ children }) {
       {children}
     </CitiesContext.Provider>
   );
-}
 
-function useCities() {
-  const context = useContext(CitiesContext);
-  if (context === undefined)
-    throw new Error("CitiesContext was used outside the Cities Provider");
-  return context;
+  function useCities() {
+    const context = useContext(CitiesContext);
+    if (context === undefined)
+      throw new Error("CitiesContext was used outside the Cities Provider");
+    return context;
+  }
 }
 
 export { CitiesProvider, useCities };
