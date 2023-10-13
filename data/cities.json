@@ -1,0 +1,76 @@
+{
+  "cities": [
+    {
+      "cityName": "Saint-Martial-Viveyrol",
+      "country": "France",
+      "emoji": "🇫🇷",
+      "date": "2023-09-22T02:32:00.145Z",
+      "notes": "hhgg",
+      "position": {
+        "lat": "45.367584368849805",
+        "lng": "0.32958984375000006"
+      },
+      "id": 98443204
+    },
+    {
+      "cityName": "La Gironde",
+      "country": "France",
+      "emoji": "🇫🇷",
+      "date": "2023-09-22T03:28:18.417Z",
+      "notes": "jjfjf",
+      "position": {
+        "lat": "45.367584368849805",
+        "lng": "-0.7470703125000001"
+      },
+      "id": 98443205
+    },
+    {
+      "cityName": "Monceaux-sur-Dordogne",
+      "country": "France",
+      "emoji": "🇫🇷",
+      "date": "2023-10-13T16:55:27.215Z",
+      "notes": "",
+      "position": {
+        "lat": "45.089035564831036",
+        "lng": "1.8896484375000002"
+      },
+      "id": 98443207
+    },
+    {
+      "cityName": "Belchite",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-10-13T17:08:25.711Z",
+      "notes": "",
+      "position": {
+        "lat": "41.32732632036624",
+        "lng": "-0.8349609375000001"
+      },
+      "id": 98443208
+    },
+    {
+      "cityName": "Mesia",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2023-10-13T17:39:16.183Z",
+      "notes": "",
+      "position": {
+        "lat": "43.052833917627936",
+        "lng": "-8.173828125000002"
+      },
+      "id": 98443209
+    },
+    {
+      "cityName": "Kraljevo",
+      "country": "Serbia",
+      "emoji": "🇷🇸",
+      "date": "2023-10-13T17:39:20.490Z",
+      "notes": "",
+      "position": {
+        "lat": "43.58039085560786",
+        "lng": "20.698242187500004"
+      },
+      "id": 98443210
+    }
+  ]
+}
